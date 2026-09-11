@@ -366,3 +366,23 @@ function displayProducts() {
 }
 
 displayProducts();
+
+clientSelect.addEventListener(
+    "change",
+    displayProducts
+);
+
+searchInput.addEventListener(
+    "input",
+    displayProducts
+);
+
+categorySelect.addEventListener(
+    "change",
+    displayProducts
+);
+
+sortSelect.addEventListener(
+    "change",
+    displayProducts
+);
