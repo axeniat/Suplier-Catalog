@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Supplier Catalog</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div>
+                <h1>Supplier Catalog</h1>
+
+                <p>
+                    Catalog de produse cu prețuri
+                    personalizate pentru clienți
+                </p>
+            </div>
+
+            <div class="order-summary">
+
+                <span>Comandă</span>
+
+                <strong id="cartCount">
+                    0 produse
+                </strong>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- FILTRE -->
+
+        <section class="filters">
+
+            <div>
+
+                <label for="clientSelect">
+                    Client
+                </label>
+
+                <select id="clientSelect">
+
+                    <option value="abc">
+                        Compania ABC
+                    </option>
+
+                    <option value="xyz">
+                        Compania XYZ
+                    </option>
+
+                    <option value="delta">
+                        Compania Delta
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="searchInput">
+                    Caută produs
+                </label>
+
+                <input type="text" id="searchInput" placeholder="Ex: Laptop">
+
+            </div>
+
+
+            <div>
+
+                <label for="categorySelect">
+                    Categorie
+                </label>
+
+                <select id="categorySelect">
+
+                    <option value="all">
+                        Toate
+                    </option>
+
+                    <option value="laptop">
+                        Laptopuri
+                    </option>
+
+                    <option value="peripherals">
+                        Periferice
+                    </option>
+
+                    <option value="monitors">
+                        Monitoare
+                    </option>
+
+                    <option value="audio">
+                        Audio
+                    </option>
+
+                    <option value="other">
+                        Altele
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label for="sortSelect">
+                    Sortare
+                </label>
+
+                <select id="sortSelect">
+
+                    <option value="default">
+                        Implicit
+                    </option>
+
+                    <option value="price-asc">
+                        Preț crescător
+                    </option>
+
+                    <option value="price-desc">
+                        Preț descrescător
+                    </option>
+
+                    <option value="stock">
+                        După stoc
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- CATALOG -->
+
+        <section class="catalog">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Catalog produse</h2>
+
+                    <p id="productsCount">
+                        Produse disponibile
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div id="productsContainer" class="products-grid">
+            </div>
+
+
+            <div id="emptyMessage" class="empty-message hidden">
+
+                <h3>
+                    Nu au fost găsite produse
+                </h3>
+
+                <p>
+                    Încearcă alte criterii de căutare.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- COMANDĂ -->
+
+        <section class="cart-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>Comanda curentă</h2>
+
+                    <p>
+                        Produsele selectate
+                    </p>
+
+                </div>
+
+                <button id="clearCartButton" class="clear-button">
+
+                    Golește comanda
+
+                </button>
+
+            </div>
+
+
+            <div id="cartContainer">
+
+                <div class="cart-empty">
+
+                    <p>
+                        Comanda este goală.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="cart-total">
+
+                <span>Total:</span>
+
+                <strong id="cartTotal">
+                    0 MDL
+                </strong>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <div id="notification" class="notification">
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
