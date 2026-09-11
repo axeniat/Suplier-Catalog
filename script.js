@@ -386,3 +386,258 @@ sortSelect.addEventListener(
     "change",
     displayProducts
 );
+
+let cart = [];
+
+function addToCart(productId) {
+
+    const product =
+        products.find(
+            product => product.id === productId
+        );
+
+    if (!product) {
+        return;
+    }
+
+    const existingItem =
+        cart.find(
+            item => item.productId === productId
+        );
+
+    if (existingItem) {
+
+        if (existingItem.quantity >= product.stock) {
+
+            showNotification(
+                "Cantitatea depășește stocul disponibil."
+            );
+
+            return;
+        }
+
+        existingItem.quantity++;
+
+    } else {
+
+        cart.push({
+            productId: productId,
+            quantity: 1
+        });
+    }
+
+    renderCart();
+
+    showNotification(
+        "Produsul a fost adăugat în comandă."
+    );
+}
+
+function renderCart() {
+
+    const selectedClient =
+        clientSelect.value;
+
+    if (cart.length === 0) {
+
+        cartContainer.innerHTML = `
+
+            <div class="cart-empty">
+
+                <p>
+                    Comanda este goală.
+                </p>
+
+            </div>
+
+        `;
+
+        cartTotal.textContent = "0 MDL";
+
+        cartCount.textContent = "0 produse";
+
+        return;
+    }
+
+    let total = 0;
+
+    let totalQuantity = 0;
+
+    cartContainer.innerHTML = "";
+
+    cart.forEach(item => {
+
+        const product =
+            products.find(
+                product =>
+                    product.id === item.productId
+            );
+
+        if (!product) {
+            return;
+        }
+
+        const price =
+            product.prices[selectedClient];
+
+        const subtotal =
+            price * item.quantity;
+
+        total += subtotal;
+
+        totalQuantity += item.quantity;
+
+        const cartItem =
+            document.createElement("div");
+
+        cartItem.className =
+            "cart-item";
+
+        cartItem.innerHTML = `
+
+            <div class="cart-product">
+
+                <strong>
+                    ${product.name}
+                </strong>
+
+                <small>
+                    ${product.code}
+                </small>
+
+            </div>
+
+            <div>
+
+                ${price.toLocaleString("ro-RO")}
+                MDL
+
+            </div>
+
+            <div class="quantity-control">
+
+                <button
+                    onclick="changeQuantity(
+                        ${product.id},
+                        -1
+                    )">
+
+                    −
+
+                </button>
+
+                <span>
+                    ${item.quantity}
+                </span>
+
+                <button
+                    onclick="changeQuantity(
+                        ${product.id},
+                        1
+                    )">
+
+                    +
+
+                </button>
+
+            </div>
+
+            <div>
+
+                ${subtotal.toLocaleString("ro-RO")}
+                MDL
+
+            </div>
+
+            <button
+                class="remove-button"
+                onclick="removeFromCart(
+                    ${product.id}
+                )">
+
+                Șterge
+
+            </button>
+
+        `;
+
+        cartContainer.appendChild(cartItem);
+
+    });
+
+    cartTotal.textContent =
+        `${total.toLocaleString("ro-RO")} MDL`;
+
+    cartCount.textContent =
+        `${totalQuantity} produse`;
+}
+
+function changeQuantity(productId, change) {
+
+    const item =
+        cart.find(
+            item => item.productId === productId
+        );
+
+    const product =
+        products.find(
+            product => product.id === productId
+        );
+
+    if (!item || !product) {
+        return;
+    }
+
+    const newQuantity =
+        item.quantity + change;
+
+    if (newQuantity <= 0) {
+
+        removeFromCart(productId);
+
+        return;
+    }
+
+    if (newQuantity > product.stock) {
+
+        showNotification(
+            "Cantitatea depășește stocul disponibil."
+        );
+
+        return;
+    }
+
+    item.quantity =
+        newQuantity;
+
+    renderCart();
+}
+
+function removeFromCart(productId) {
+
+    cart =
+        cart.filter(
+            item => item.productId !== productId
+        );
+
+    renderCart();
+
+    showNotification(
+        "Produsul a fost eliminat."
+    );
+}
+
+clearCartButton.addEventListener(
+    "click",
+    () => {
+
+        cart = [];
+
+        renderCart();
+
+        showNotification(
+            "Comanda a fost golită."
+        );
+
+    }
+);
